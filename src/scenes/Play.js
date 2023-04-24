@@ -25,9 +25,9 @@ class Play extends Phaser.Scene {
         // add rocket (p1)
         this.p1Rocket = new Rocket(this, game.config.width/2, game.config.height - borderUISize - borderPadding, "rocket").setOrigin(0.5,0);
         // add spaceschips (x3)
-        this.ship01 = new Spaceship(this, game.config.width + borderUISize*6, borderUISize*4, "spaceship", 0, 30,).setOrigin(0,0);
-        this.ship02 = new Spaceship(this, game.config.width + borderUISize*3, borderUISize*5 + borderPadding*2, "spaceship", 0, 20,).setOrigin(0,0);
-        this.ship03 = new Spaceship(this, game.config.width, borderUISize*6 + borderPadding*4, "spaceship", 0, 10,).setOrigin(0,0);
+        this.ship01 = new Spaceship(this, game.config.width + borderUISize*6, borderUISize*4, "spaceship", 0, 30).setOrigin(0,0);
+        this.ship02 = new Spaceship(this, game.config.width + borderUISize*3, borderUISize*5 + borderPadding*2, "spaceship", 0, 20).setOrigin(0,0);
+        this.ship03 = new Spaceship(this, game.config.width, borderUISize*6 + borderPadding*4, "spaceship", 0, 10).setOrigin(0,0);
         
         // define keys
         keyF = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.F);
@@ -65,7 +65,7 @@ class Play extends Phaser.Scene {
 
         // 60 second play clock
         scoreConfig.fixedWidth = 0;
-        this.clock = this.time.delayedCall(1000, () => {
+        this.clock = this.time.delayedCall(60000, () => {
             this.add.text(game.config.width/2, game.config.height/2, "GAME OVER", scoreConfig).setOrigin(0.5);
             this.add.text(game.config.width/2, game.config.height/2 + 64, "Press (R) to Restart", scoreConfig).setOrigin(0.5);
             this.gameOver = true;
@@ -73,6 +73,10 @@ class Play extends Phaser.Scene {
     }
 
     update() {
+        // check key input for restart
+        if(this.gameOver && Phaser.Input.Keyboard.JustDown(keyR)) {
+            this.scene.restart();
+        }
         this.starfield.tilePositionX -= 4;
         if(!this.gameOver){
             this.p1Rocket.update();
