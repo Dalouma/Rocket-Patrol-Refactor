@@ -1,12 +1,13 @@
 /*
 Name: David Amaya
 Mod title: Rocket Patrol 2
-Current time worked: 1 hour, 40 mins
+Current time worked: 1 hour, 50 mins
 
 Mod List:
     High Score tracker: 5 points
         implemented for both easy and expert mode
     FIRE UI(from original game): 5 points
+    Movement after while firing: 5 points
     ...
 */
 
