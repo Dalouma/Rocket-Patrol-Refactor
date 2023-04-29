@@ -1,6 +1,7 @@
 class Play extends Phaser.Scene {
     constructor() {
         super("playScene");
+        //this.isFiring = false;
     }
 
     preload() {
@@ -60,13 +61,22 @@ class Play extends Phaser.Scene {
         };
         this.scoreLeft = this.add.text(borderUISize + borderPadding, borderUISize + borderPadding*2, this.p1Score, scoreConfig);
         scoreConfig.fixedWidth = 0;
+        // FIRE UI
+        this.fireUI = this.add.text(game.config.width/2, borderUISize + borderPadding*2, "FIRE", scoreConfig);
+        this.fireUI.setVisible(false);
+        // High Score text
+        scoreConfig.backgroundColor = "#004cff";
+        scoreConfig.color = "#000";
         if(this.game.settings.difficulty == "easy"){
-            this.scoreRight = this.add.text(game.config.width - borderUISize - borderPadding, borderUISize + borderPadding*2, `High Score: ${highscore}`, scoreConfig).setOrigin(1,0);
+            this.scoreRight = this.add.text(game.config.width - borderUISize - borderPadding, borderUISize + borderPadding*2, highscore, scoreConfig).setOrigin(1,0);
         }
         if(this.game.settings.difficulty == "hard"){
-            this.scoreRight = this.add.text(game.config.width - borderUISize - borderPadding, borderUISize + borderPadding*2, `High Score: ${highscoreExpert}`, scoreConfig).setOrigin(1,0);
+            this.scoreRight = this.add.text(game.config.width - borderUISize - borderPadding, borderUISize + borderPadding*2, highscoreExpert, scoreConfig).setOrigin(1,0);
         }
-        
+        // reset score config
+        scoreConfig.backgroundColor = "#F3B141";
+        scoreConfig.color = "#843605";
+      
 
         // GAME OVER flag
         this.gameOver = false;
@@ -89,13 +99,22 @@ class Play extends Phaser.Scene {
         if(this.gameOver && Phaser.Input.Keyboard.JustDown(keyLEFT)) {
             this.scene.start("menuScene");
         }
+        // background scroll
         this.starfield.tilePositionX -= 4;
+        // move sprites
         if(!this.gameOver){
             this.p1Rocket.update();
             this.ship01.update();
             this.ship02.update();
             this.ship03.update();
         }
+        // FIRE UI
+        if(this.p1Rocket.isFiring == true && !this.isFiring){
+            this.fireUI.setVisible(true);
+        }else{
+            this.fireUI.setVisible(false);
+        }
+        // check collisions
         if(this.checkCollision(this.p1Rocket, this.ship01)) {
             this.p1Rocket.reset();
             this.shipExplode(this.ship01);
@@ -137,11 +156,11 @@ class Play extends Phaser.Scene {
         // update high score
         if(game.settings.difficulty == "easy" && highscore < this.p1Score){
             highscore = this.p1Score;
-            this.scoreRight.text = `High Score: ${highscore}`;
+            this.scoreRight.text = highscore;
         }
         if(this.game.settings.difficulty == "hard" && highscoreExpert < this.p1Score){
             highscoreExpert = this.p1Score;
-            this.scoreRight.text = `High Score: ${highscoreExpert}`;
+            this.scoreRight.text = highscoreExpert;
         }
         // explode sfx
         this.sound.play("sfx_explosion");
