@@ -60,12 +60,18 @@ class Play extends Phaser.Scene {
         };
         this.scoreLeft = this.add.text(borderUISize + borderPadding, borderUISize + borderPadding*2, this.p1Score, scoreConfig);
         scoreConfig.fixedWidth = 0;
-        this.scoreRight = this.add.text(game.config.width - borderUISize - borderPadding, borderUISize + borderPadding*2, `Highscore: ${this.p1Score}`, scoreConfig).setOrigin(1,0);
+        if(this.game.settings.difficulty == "easy"){
+            this.scoreRight = this.add.text(game.config.width - borderUISize - borderPadding, borderUISize + borderPadding*2, `High Score: ${highscore}`, scoreConfig).setOrigin(1,0);
+        }
+        if(this.game.settings.difficulty == "hard"){
+            this.scoreRight = this.add.text(game.config.width - borderUISize - borderPadding, borderUISize + borderPadding*2, `High Score: ${highscoreExpert}`, scoreConfig).setOrigin(1,0);
+        }
+        
 
         // GAME OVER flag
         this.gameOver = false;
 
-        // 60 second play clock
+        // game timer
         scoreConfig.fixedWidth = 0;
         this.clock = this.time.delayedCall(game.settings.gameTimer, () => {
             this.add.text(game.config.width/2, game.config.height/2, "GAME OVER", scoreConfig).setOrigin(0.5);
@@ -77,6 +83,7 @@ class Play extends Phaser.Scene {
     update() {
         // check key input for restart
         if(this.gameOver && Phaser.Input.Keyboard.JustDown(keyR)) {
+            this.sound.play("sfx_select");
             this.scene.restart();
         }
         if(this.gameOver && Phaser.Input.Keyboard.JustDown(keyLEFT)) {
@@ -127,6 +134,15 @@ class Play extends Phaser.Scene {
         // score add and repaint
         this.p1Score += ship.points;
         this.scoreLeft.text = this.p1Score;
+        // update high score
+        if(game.settings.difficulty == "easy" && highscore < this.p1Score){
+            highscore = this.p1Score;
+            this.scoreRight.text = `High Score: ${highscore}`;
+        }
+        if(this.game.settings.difficulty == "hard" && highscoreExpert < this.p1Score){
+            highscoreExpert = this.p1Score;
+            this.scoreRight.text = `High Score: ${highscoreExpert}`;
+        }
         // explode sfx
         this.sound.play("sfx_explosion");
     }

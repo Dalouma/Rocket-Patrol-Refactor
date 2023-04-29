@@ -14,6 +14,7 @@ class Menu extends Phaser.Scene {
         if(Phaser.Input.Keyboard.JustDown(keyLEFT)) {
             // easy mode
             game.settings = {
+                difficulty: "easy",
                 spaceshipSpeed: 3,
                 gameTimer: 60000
             };
@@ -23,6 +24,7 @@ class Menu extends Phaser.Scene {
         if(Phaser.Input.Keyboard.JustDown(keyRIGHT)) {
             // hard mode
             game.settings = {
+                difficulty: "hard",
                 spaceshipSpeed: 4,
                 gameTimer: 45000
             };
@@ -56,7 +58,8 @@ class Menu extends Phaser.Scene {
 
         // show high score
         menuConfig.backgroundColor = "#004cff";
-        this.add.text(game.config.width/2, game.config.height - borderUISize - borderPadding, `High Score: `, menuConfig).setOrigin(0.5)
+        menuConfig.fontSize = "24px";
+        this.add.text(game.config.width/2, game.config.height - borderUISize - borderPadding, `High Score: ${highscore}(Easy), ${highscoreExpert}(Expert)`, menuConfig).setOrigin(0.5);
 
         // define keys
         keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);

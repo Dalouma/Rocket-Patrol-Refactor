@@ -1,4 +1,13 @@
-console.log("start");
+/*
+Name: David Amaya
+Mod title: Rocket Patrol 2
+Current time worked: 1 hour, 20 mins
+
+Mod List:
+    High Score tracker: 5 points
+        implemented for both easy and expert mode
+    ...
+*/
 
 let config = {
     type: Phaser.CANVAS,
@@ -8,6 +17,10 @@ let config = {
 }
 
 let game = new Phaser.Game(config);
+
+// define highscores
+let highscore = 0;
+let highscoreExpert = 0;
 
 // reserve keyboard vars
 let keyF, keyR, keyLEFT, keyRIGHT;
