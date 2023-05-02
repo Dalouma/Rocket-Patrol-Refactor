@@ -8,6 +8,10 @@ class Menu extends Phaser.Scene {
         this.load.audio("sfx_select", "./assets/blip_select12.wav");
         this.load.audio("sfx_explosion", "./assets/explosion38.wav");
         this.load.audio("sfx_rocket", "./assets/rocket_shot.wav");
+        // load bgm
+        // https://patrickdearteaga.com/arcade-music/
+        // track 3: "Intergalactic Odyssey"
+        this.load.audio("music", "./assets/Intergalactic Odyssey.ogg");
     }
 
     update() {

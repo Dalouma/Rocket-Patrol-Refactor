@@ -14,6 +14,9 @@ class Play extends Phaser.Scene {
     }
 
     create() {
+        // add background music
+        this.bgm = this.sound.add("music", {volume: 0.1});
+        this.bgm.play();
         // place tile sprite
         this.starfield = this.add.tileSprite(0, 0, 640, 480, "starfield").setOrigin(0,0);
         // green UI bg
@@ -28,9 +31,9 @@ class Play extends Phaser.Scene {
         // add spaceschips (x3)
         //this.ship01 = new Spaceship(this, game.config.width + borderUISize*6, borderUISize*4, "spaceship", 0, 30).setOrigin(0,0);
         //this.ship02 = new Spaceship(this, game.config.width + borderUISize*3, borderUISize*5 + borderPadding*2, "spaceship", 0, 20).setOrigin(0,0);
-        this.ship01 = new Spaceship(this, game.config.width/2, borderUISize*4, "spaceship", 0, 30).setOrigin(0.5);
-        this.ship02 = new Spaceship(this, game.config.width/2, borderUISize*5 + borderPadding*2, "spaceship", 0, 20).setOrigin(0.5);
-        this.ship03 = new Spaceship(this, game.config.width/2, borderUISize*6 + borderPadding*4, "spaceship", 0, 10).setOrigin(0.5);
+        this.ship01 = new Spaceship(this, game.config.width/2, borderUISize*4, "spaceship", 0, 30).setOrigin(0);
+        this.ship02 = new Spaceship(this, game.config.width/2, borderUISize*5 + borderPadding*2, "spaceship", 0, 20).setOrigin(0);
+        this.ship03 = new Spaceship(this, game.config.width/2, borderUISize*6 + borderPadding*4, "spaceship", 0, 10).setOrigin(0);
         if(this.ship01.moveDir == "right"){
             this.ship01.flipX = true;
         }
@@ -97,6 +100,7 @@ class Play extends Phaser.Scene {
         this.clock = this.time.delayedCall(game.settings.gameTimer, () => {
             this.add.text(game.config.width/2, game.config.height/2, "GAME OVER", scoreConfig).setOrigin(0.5);
             this.add.text(game.config.width/2, game.config.height/2 + 64, "Press (R) to Restart or <- for Menu", scoreConfig).setOrigin(0.5);
+            this.bgm.stop();
             this.gameOver = true;
         }, null, this);
     }
@@ -154,7 +158,7 @@ class Play extends Phaser.Scene {
         // temporarily hide ship
         ship.alpha = 0;
         // create explosion sprite at ship's position
-        let boom = this.add.sprite(ship.x, ship.y, "explosion").setOrigin(0,0);
+        let boom = this.add.sprite(ship.x, ship.y, "explosion").setOrigin(0);
         boom.anims.play("explode");             // play explode animation
         boom.on("animationcomplete", () => {    // callback after anim completes
             ship.reset();                       // reset ship position
