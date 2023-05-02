@@ -1,7 +1,7 @@
 /*
 Name: David Amaya
 Mod title: Rocket Patrol 2
-Time working on project: 3 hours, 20 mins
+Time working on project: 5 hours, 50 mins
 
 Mod List:
     High Score tracker: 5 points
@@ -11,6 +11,8 @@ Mod List:
     Randomized each spaceship movement direction at the start of each play: 5 points
     Added background music: 5 points
         bgm by Pagtrick de Arteaga from https://patrickdearteaga.com/arcade-music/
+    Added new background image: 5 points
+        Using "space background generator" at https://deep-fold.itch.io/space-background-generator
 */
 
 let config = {

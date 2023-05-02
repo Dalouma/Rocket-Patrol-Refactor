@@ -20,6 +20,7 @@ class Menu extends Phaser.Scene {
             game.settings = {
                 difficulty: "easy",
                 spaceshipSpeed: 3,
+                speederSpeed: 6,
                 gameTimer: 60000
             };
             this.sound.play("sfx_select");
@@ -30,6 +31,7 @@ class Menu extends Phaser.Scene {
             game.settings = {
                 difficulty: "hard",
                 spaceshipSpeed: 4,
+                speederSpeed: 7,
                 gameTimer: 45000
             };
             this.sound.play("sfx_select");

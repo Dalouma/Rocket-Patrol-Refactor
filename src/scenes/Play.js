@@ -7,10 +7,12 @@ class Play extends Phaser.Scene {
     preload() {
         // load spritesheet
         this.load.spritesheet("explosion", "./assets/explosion.png", {frameWidth: 64, frameHeight: 32, startFrame: 0, endFrame: 9});
+        this.load.spritesheet("speeder", "./assets/speeder.png", {frameWidth: 64, frameHeight: 64})
         // load images
         this.load.image("rocket", "./assets/rocket.png");
         this.load.image("spaceship", "./assets/spaceship.png");
         this.load.image("starfield", "./assets/starfield.png");
+        this.load.image("spaceBG", "./assets/Space Background.png");
     }
 
     create() {
@@ -18,7 +20,7 @@ class Play extends Phaser.Scene {
         this.bgm = this.sound.add("music", {volume: 0.1});
         this.bgm.play();
         // place tile sprite
-        this.starfield = this.add.tileSprite(0, 0, 640, 480, "starfield").setOrigin(0,0);
+        this.starfield = this.add.tileSprite(0, 0, 640, 480, "spaceBG").setOrigin(0,0);
         // green UI bg
         this.add.rectangle(0, borderUISize + borderPadding, game.config.width, borderUISize * 2, 0x00FF00).setOrigin(0,0);
         // white bars
@@ -28,12 +30,15 @@ class Play extends Phaser.Scene {
         this.add.rectangle(game.config.width - borderUISize, 0, borderUISize, game.config.height, 0xFFFFFF).setOrigin(0,0);
         // add rocket (p1)
         this.p1Rocket = new Rocket(this, game.config.width/2, game.config.height - borderUISize - borderPadding, "rocket").setOrigin(0.5,0);
-        // add spaceschips (x3)
-        //this.ship01 = new Spaceship(this, game.config.width + borderUISize*6, borderUISize*4, "spaceship", 0, 30).setOrigin(0,0);
-        //this.ship02 = new Spaceship(this, game.config.width + borderUISize*3, borderUISize*5 + borderPadding*2, "spaceship", 0, 20).setOrigin(0,0);
+        // add spaceschips
         this.ship01 = new Spaceship(this, game.config.width/2, borderUISize*4, "spaceship", 0, 30).setOrigin(0);
         this.ship02 = new Spaceship(this, game.config.width/2, borderUISize*5 + borderPadding*2, "spaceship", 0, 20).setOrigin(0);
         this.ship03 = new Spaceship(this, game.config.width/2, borderUISize*6 + borderPadding*4, "spaceship", 0, 10).setOrigin(0);
+        this.ship04 = new Speeder(this, game.config.width/2, borderUISize*7 + borderPadding*6, "speeder", 0, 50).setOrigin(0);
+        this.ship04.setScale(0.5);
+        // checking width
+        console.log(`ship 1 width is ${this.ship01.width}`);
+        console.log(`ship 4 width is ${this.ship04.width}`);
         if(this.ship01.moveDir == "right"){
             this.ship01.flipX = true;
         }
@@ -42,6 +47,9 @@ class Play extends Phaser.Scene {
         }
         if(this.ship03.moveDir == "right"){
             this.ship03.flipX = true;
+        }
+        if(this.ship04.moveDir == "left"){
+            this.ship04.flipX = true;
         }
         
         // define keys
@@ -115,13 +123,14 @@ class Play extends Phaser.Scene {
             this.scene.start("menuScene");
         }
         // background scroll
-        this.starfield.tilePositionX -= 4;
+        this.starfield.tilePositionX -= 1;
         // move sprites
         if(!this.gameOver){
             this.p1Rocket.update();
             this.ship01.update();
             this.ship02.update();
             this.ship03.update();
+            this.ship04.update();
         }
         // FIRE UI
         if(this.p1Rocket.isFiring == true && !this.isFiring){
@@ -141,6 +150,10 @@ class Play extends Phaser.Scene {
         if(this.checkCollision(this.p1Rocket, this.ship03)) {
             this.p1Rocket.reset();
             this.shipExplode(this.ship03);
+        }
+        if(this.checkCollision(this.p1Rocket, this.ship04)) {
+            this.p1Rocket.reset();
+            this.shipExplode(this.ship04);
         }
     }
 
