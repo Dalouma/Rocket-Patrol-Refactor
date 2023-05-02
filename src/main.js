@@ -1,7 +1,7 @@
 /*
 Name: David Amaya
 Mod title: Rocket Patrol 2
-Current time worked: 1 hour, 50 mins
+Time working on project: 3 hours, 20 mins
 
 Mod List:
     High Score tracker: 5 points
