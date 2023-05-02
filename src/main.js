@@ -9,6 +9,8 @@ Mod List:
     FIRE UI(from original game): 5 points
     Movement after while firing: 5 points
     Randomized each spaceship movement direction at the start of each play: 5 points
+    Added background music: 5 points
+        bgm by Pagtrick de Arteaga from https://patrickdearteaga.com/arcade-music/
 */
 
 let config = {
