@@ -1,7 +1,7 @@
 /*
 Name: David Amaya
 Mod title: Rocket Patrol: Galaxy
-Time working on project: 3 hours, 20 mins
+Time working on project: ~ 13 hours
 
 Mod List:
     5 pts: High Score tracker
@@ -24,6 +24,7 @@ Mod List:
         https://freesound.org/people/alphatrooper18/sounds/362423/
     10 pts: Paralax scrolling for background
     10 pts: Added timer
+    5 pts: speed up after 30 seconds
 */
 
 let config = {

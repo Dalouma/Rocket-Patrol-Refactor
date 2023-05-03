@@ -124,6 +124,8 @@ class Play extends Phaser.Scene {
         scoreConfig.color = "#000";
         scoreConfig.backgroundColor = "#0000";
         this.gameTimer = this.add.text(borderUISize + borderPadding + 110, borderUISize + borderPadding*2, `Time: ${game.settings.gameTimer/1000}`, scoreConfig);
+        // speed up variable
+        this.speedUp = false;
     }
 
     update() {
@@ -134,6 +136,7 @@ class Play extends Phaser.Scene {
             this.scene.restart();
         }
         if(this.gameOver && Phaser.Input.Keyboard.JustDown(keyLEFT)) {
+            this.bgm.stop();
             this.scene.start("menuScene");
         }
         // background scroll
@@ -149,6 +152,14 @@ class Play extends Phaser.Scene {
         }
         // Game timer
         this.gameTimer.text = `Time: ${Phaser.Math.CeilTo(this.clock.getOverallRemainingSeconds())}`;
+        // speed up after 30 seconds
+        if(this.speedUp == false && this.clock.getElapsedSeconds() > 30){
+            this.ship01.moveSpeed += 2;
+            this.ship02.moveSpeed += 2;
+            this.ship03.moveSpeed += 2;
+            this.ship04.moveSpeed += 2;
+            this.speedUp = true;
+        }
         // FIRE UI
         if(this.p1Rocket.isFiring == true && !this.isFiring){
             this.fireUI.setVisible(true);
@@ -209,6 +220,6 @@ class Play extends Phaser.Scene {
         }
         // explode sfx
         let nboom = Phaser.Math.Between(1,4);
-        this.sound.play(`boom${nboom}`);
+        this.sound.play(`boom${nboom}`, {volume: 0.5});
     }
 }
