@@ -1,7 +1,7 @@
 /*
 Name: David Amaya
 Mod title: Rocket Patrol: Galaxy
-Time working on project: ~ 13 hours
+Time working on project: ~ 14 hours
 
 Mod List:
     5 pts: High Score tracker
@@ -25,6 +25,8 @@ Mod List:
     10 pts: Paralax scrolling for background
     10 pts: Added timer
     5 pts: speed up after 30 seconds
+    10 pts: UI and Menu art
+        generated art with https://deep-fold.itch.io/space-background-generator
 */
 
 let config = {

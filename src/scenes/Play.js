@@ -11,7 +11,6 @@ class Play extends Phaser.Scene {
         this.load.spritesheet("enemySmall", "./assets/enemy-small.png", {frameWidth: 32, frameHeight: 32, startFrame: 0, endFrame: 1});
         // load images
         this.load.image("rocket", "./assets/rocket.png");
-        this.load.image("spaceship", "./assets/spaceship.png");
         this.load.image("spaceBG", "./assets/Space Background.png");
         this.load.image("planetBG", "./assets/Planet Background.png");
     }
@@ -23,13 +22,16 @@ class Play extends Phaser.Scene {
         // add bakgrouond sprites
         this.starfield = this.add.tileSprite(0, 0, 640, 480, "spaceBG").setOrigin(0,0);
         this.planets = this.add.tileSprite(0, 0, 640, 480, "planetBG").setOrigin(0,0);
-        // green UI bg
-        this.add.rectangle(0, borderUISize + borderPadding, game.config.width, borderUISize * 2 - 10, 0x6800b3).setOrigin(0,0);
+        // Top UI bg
+        this.add.rectangle(0, borderUISize + borderPadding, game.config.width, borderUISize * 2 - 10, 0x181a47).setOrigin(0,0);
         // black bars
         this.add.rectangle(0, 0, game.config.width, borderUISize, 0x000).setOrigin(0,0);
         this.add.rectangle(0, game.config.height - borderUISize, game.config.width, borderUISize, 0x000).setOrigin(0,0);
         this.add.rectangle(0, 0, borderUISize, game.config.height, 0x000).setOrigin(0,0);
         this.add.rectangle(game.config.width - borderUISize, 0, borderUISize, game.config.height, 0x000).setOrigin(0,0);
+        // score borders
+        this.add.rectangle(borderUISize + borderPadding - 5, borderUISize + borderPadding*2 - 5, 110, 46, 0x000).setOrigin(0,0);
+        this.add.rectangle(game.config.width - borderUISize - borderPadding + 5, borderUISize + borderPadding*2 - 5, 110, 46, 0x000).setOrigin(1,0);
         // add rocket (p1)
         this.p1Rocket = new Rocket(this, game.config.width/2, game.config.height - borderUISize - borderPadding, "rocket").setOrigin(0.5,0);
         // add spaceschips
@@ -92,12 +94,16 @@ class Play extends Phaser.Scene {
             },
             fixedWidth: 100
         };
+        // score display
         this.scoreLeft = this.add.text(borderUISize + borderPadding, borderUISize + borderPadding*2, this.p1Score, scoreConfig);
         scoreConfig.fixedWidth = 0;
         // FIRE UI
+        scoreConfig.backgroundColor = "#0000";
+        scoreConfig.color = "#FFFFFF";
         this.fireUI = this.add.text(game.config.width/2, borderUISize + borderPadding*2, "FIRE", scoreConfig);
         this.fireUI.setVisible(false);
         // High Score text
+        scoreConfig.fixedWidth = 100;
         scoreConfig.backgroundColor = "#004cff";
         scoreConfig.color = "#000";
         if(this.game.settings.difficulty == "easy"){
@@ -121,7 +127,7 @@ class Play extends Phaser.Scene {
             this.gameOver = true;
         }, null, this);
         // timer text
-        scoreConfig.color = "#000";
+        scoreConfig.color = "#FFFFFF";
         scoreConfig.backgroundColor = "#0000";
         this.gameTimer = this.add.text(borderUISize + borderPadding + 110, borderUISize + borderPadding*2, `Time: ${game.settings.gameTimer/1000}`, scoreConfig);
         // speed up variable
