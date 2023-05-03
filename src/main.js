@@ -23,6 +23,7 @@ Mod List:
         https://freesound.org/people/kutejnikov/sounds/522209/
         https://freesound.org/people/alphatrooper18/sounds/362423/
     10 pts: Paralax scrolling for background
+    10 pts: Added timer
 */
 
 let config = {

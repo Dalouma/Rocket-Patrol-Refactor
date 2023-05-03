@@ -24,7 +24,7 @@ class Play extends Phaser.Scene {
         this.starfield = this.add.tileSprite(0, 0, 640, 480, "spaceBG").setOrigin(0,0);
         this.planets = this.add.tileSprite(0, 0, 640, 480, "planetBG").setOrigin(0,0);
         // green UI bg
-        this.add.rectangle(0, borderUISize + borderPadding, game.config.width, borderUISize * 2 - 10, 0x210B3B).setOrigin(0,0);
+        this.add.rectangle(0, borderUISize + borderPadding, game.config.width, borderUISize * 2 - 10, 0x6800b3).setOrigin(0,0);
         // black bars
         this.add.rectangle(0, 0, game.config.width, borderUISize, 0x000).setOrigin(0,0);
         this.add.rectangle(0, game.config.height - borderUISize, game.config.width, borderUISize, 0x000).setOrigin(0,0);
@@ -41,10 +41,6 @@ class Play extends Phaser.Scene {
         this.ship02.angle = -90;
         this.ship03.angle = -90;
         this.ship04.angle = -90;
-        // checking size
-        //console.log(`ship 1 width is ${this.ship01.width}`);
-        //console.log(`ship 1 height is ${this.ship01.height}`);
-        //console.log(`ship 4 width is ${this.ship04.width}`);
         if(this.ship01.moveDir == "left"){
             this.ship01.angle = 90;
         }
@@ -80,14 +76,10 @@ class Play extends Phaser.Scene {
         this.ship02.anims.play("moveEnemyBig");
         this.ship03.anims.play("moveEnemyBig");
 
-        // checking size
-        console.log(`ship 1 width is ${this.ship01.width}`);
-        console.log(`ship 1 height is ${this.ship01.height}`);
-
         // initialize score
         this.p1Score = 0;
 
-        // display score
+        // display score config
         let scoreConfig = {
             fontFamily: "Courier",
             fontSize: "28px",
@@ -114,10 +106,6 @@ class Play extends Phaser.Scene {
         if(this.game.settings.difficulty == "hard"){
             this.scoreRight = this.add.text(game.config.width - borderUISize - borderPadding, borderUISize + borderPadding*2, highscoreExpert, scoreConfig).setOrigin(1,0);
         }
-        // reset score config
-        scoreConfig.backgroundColor = "#F3B141";
-        scoreConfig.color = "#843605";
-      
 
         // GAME OVER flag
         this.gameOver = false;
@@ -125,17 +113,24 @@ class Play extends Phaser.Scene {
         // game timer
         scoreConfig.fixedWidth = 0;
         this.clock = this.time.delayedCall(game.settings.gameTimer, () => {
+            // reset score config
+            //scoreConfig.backgroundColor = "#F3B141";
+            scoreConfig.color = "#FFFFFF";
             this.add.text(game.config.width/2, game.config.height/2, "GAME OVER", scoreConfig).setOrigin(0.5);
             this.add.text(game.config.width/2, game.config.height/2 + 64, "Press (R) to Restart or <- for Menu", scoreConfig).setOrigin(0.5);
-            this.bgm.stop();
             this.gameOver = true;
         }, null, this);
+        // timer text
+        scoreConfig.color = "#000";
+        scoreConfig.backgroundColor = "#0000";
+        this.gameTimer = this.add.text(borderUISize + borderPadding + 110, borderUISize + borderPadding*2, `Time: ${game.settings.gameTimer/1000}`, scoreConfig);
     }
 
     update() {
         // check key input for restart
         if(this.gameOver && Phaser.Input.Keyboard.JustDown(keyR)) {
             this.sound.play("sfx_select");
+            this.bgm.stop();
             this.scene.restart();
         }
         if(this.gameOver && Phaser.Input.Keyboard.JustDown(keyLEFT)) {
@@ -152,6 +147,8 @@ class Play extends Phaser.Scene {
             this.ship03.update();
             this.ship04.update();
         }
+        // Game timer
+        this.gameTimer.text = `Time: ${Phaser.Math.CeilTo(this.clock.getOverallRemainingSeconds())}`;
         // FIRE UI
         if(this.p1Rocket.isFiring == true && !this.isFiring){
             this.fireUI.setVisible(true);
