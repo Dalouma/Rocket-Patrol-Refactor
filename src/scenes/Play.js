@@ -208,6 +208,7 @@ class Play extends Phaser.Scene {
             this.scoreRight.text = highscoreExpert;
         }
         // explode sfx
-        this.sound.play("sfx_explosion");
+        let nboom = Phaser.Math.Between(1,4);
+        this.sound.play(`boom${nboom}`);
     }
 }

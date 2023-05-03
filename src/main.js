@@ -17,6 +17,11 @@ Mod List:
         https://ansimuz.itch.io/spaceship-shooter-environment
         upscaled to 200% using https://lospec.com/pixel-art-scaler/
     Added new faster spaceship subclass: 15 points
+    Added 4 new explosion sounds: 10 points
+        https://www.shockwave-sound.com/free-sound-effects/explosion-sounds
+        https://freesound.org/people/MusicLegends/sounds/344303/
+        https://freesound.org/people/kutejnikov/sounds/522209/
+        https://freesound.org/people/alphatrooper18/sounds/362423/
 */
 
 let config = {
