@@ -13,21 +13,23 @@ class Play extends Phaser.Scene {
         this.load.image("rocket", "./assets/rocket.png");
         this.load.image("spaceship", "./assets/spaceship.png");
         this.load.image("spaceBG", "./assets/Space Background.png");
+        this.load.image("planetBG", "./assets/Planet Background.png");
     }
 
     create() {
         // add background music
         this.bgm = this.sound.add("music", {volume: 0.1});
         this.bgm.play();
-        // place tile sprite
+        // add bakgrouond sprites
         this.starfield = this.add.tileSprite(0, 0, 640, 480, "spaceBG").setOrigin(0,0);
+        this.planets = this.add.tileSprite(0, 0, 640, 480, "planetBG").setOrigin(0,0);
         // green UI bg
-        this.add.rectangle(0, borderUISize + borderPadding, game.config.width, borderUISize * 2, 0x00FF00).setOrigin(0,0);
-        // white bars
-        this.add.rectangle(0, 0, game.config.width, borderUISize, 0xFFFFFF).setOrigin(0,0);
-        this.add.rectangle(0, game.config.height - borderUISize, game.config.width, borderUISize, 0xFFFFFF).setOrigin(0,0);
-        this.add.rectangle(0, 0, borderUISize, game.config.height, 0xFFFFFF).setOrigin(0,0);
-        this.add.rectangle(game.config.width - borderUISize, 0, borderUISize, game.config.height, 0xFFFFFF).setOrigin(0,0);
+        this.add.rectangle(0, borderUISize + borderPadding, game.config.width, borderUISize * 2 - 10, 0x210B3B).setOrigin(0,0);
+        // black bars
+        this.add.rectangle(0, 0, game.config.width, borderUISize, 0x000).setOrigin(0,0);
+        this.add.rectangle(0, game.config.height - borderUISize, game.config.width, borderUISize, 0x000).setOrigin(0,0);
+        this.add.rectangle(0, 0, borderUISize, game.config.height, 0x000).setOrigin(0,0);
+        this.add.rectangle(game.config.width - borderUISize, 0, borderUISize, game.config.height, 0x000).setOrigin(0,0);
         // add rocket (p1)
         this.p1Rocket = new Rocket(this, game.config.width/2, game.config.height - borderUISize - borderPadding, "rocket").setOrigin(0.5,0);
         // add spaceschips
@@ -141,6 +143,7 @@ class Play extends Phaser.Scene {
         }
         // background scroll
         this.starfield.tilePositionX -= 1;
+        this.planets.tilePositionX -= 1.3;
         // move sprites
         if(!this.gameOver){
             this.p1Rocket.update();

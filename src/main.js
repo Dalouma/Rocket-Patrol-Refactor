@@ -1,27 +1,28 @@
 /*
 Name: David Amaya
-Mod title: Rocket Patrol 2
+Mod title: Rocket Patrol: Galaxy
 Time working on project: 3 hours, 20 mins
 
 Mod List:
-    High Score tracker: 5 points
+    5 pts: High Score tracker
         implemented for both easy and expert mode
-    FIRE UI(from original game): 5 points
-    Movement after while firing: 5 points
-    Randomized each spaceship movement direction at the start of each play: 5 points
-    Added background music: 5 points
+    5 pts: FIRE UI(from original game)
+    5 pts: Movement after while firing
+    5 pts: Randomized each spaceship movement direction at the start of each play
+    5 pts: Added background music
         bgm by Pagtrick de Arteaga from https://patrickdearteaga.com/arcade-music/
-    Added new background image: 5 points
+    5 pts: Added new background image
         Using "space background generator" at https://deep-fold.itch.io/space-background-generator
-    Added new animated sprite for ships: 10 points
+    10 pts: Added new animated sprite for ships
         https://ansimuz.itch.io/spaceship-shooter-environment
         upscaled to 200% using https://lospec.com/pixel-art-scaler/
-    Added new faster spaceship subclass: 15 points
-    Added 4 new explosion sounds: 10 points
-        https://www.shockwave-sound.com/free-sound-effects/explosion-sounds
+    15 pts: Added new faster spaceship subclass
+    10 pts: Added 4 new explosion sounds
+        https://mixkit.co/free-sound-effects/explosion/
         https://freesound.org/people/MusicLegends/sounds/344303/
         https://freesound.org/people/kutejnikov/sounds/522209/
         https://freesound.org/people/alphatrooper18/sounds/362423/
+    10 pts: Paralax scrolling for background
 */
 
 let config = {
