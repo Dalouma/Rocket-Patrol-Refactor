@@ -6,12 +6,12 @@ class Play extends Phaser.Scene {
 
     preload() {
         // load spritesheet
-        this.load.spritesheet("explosion", "./assets/explosion.png", {frameWidth: 64, frameHeight: 32, startFrame: 0, endFrame: 9});
-        this.load.spritesheet("speeder", "./assets/speeder.png", {frameWidth: 64, frameHeight: 64})
+        this.load.spritesheet("explosion", "./assets/explosion.png", {frameWidth: 32, frameHeight: 32, startFrame: 0, endFrame: 4});
+        this.load.spritesheet("enemyBig", "./assets/enemy-big.png", {frameWidth: 64, frameHeight: 64, startFrame: 0, endFrame: 1});
+        this.load.spritesheet("enemySmall", "./assets/enemy-small.png", {frameWidth: 32, frameHeight: 32, startFrame: 0, endFrame: 1});
         // load images
         this.load.image("rocket", "./assets/rocket.png");
         this.load.image("spaceship", "./assets/spaceship.png");
-        this.load.image("starfield", "./assets/starfield.png");
         this.load.image("spaceBG", "./assets/Space Background.png");
     }
 
@@ -31,25 +31,29 @@ class Play extends Phaser.Scene {
         // add rocket (p1)
         this.p1Rocket = new Rocket(this, game.config.width/2, game.config.height - borderUISize - borderPadding, "rocket").setOrigin(0.5,0);
         // add spaceschips
-        this.ship01 = new Spaceship(this, game.config.width/2, borderUISize*4, "spaceship", 0, 30).setOrigin(0);
-        this.ship02 = new Spaceship(this, game.config.width/2, borderUISize*5 + borderPadding*2, "spaceship", 0, 20).setOrigin(0);
-        this.ship03 = new Spaceship(this, game.config.width/2, borderUISize*6 + borderPadding*4, "spaceship", 0, 10).setOrigin(0);
-        this.ship04 = new Speeder(this, game.config.width/2, borderUISize*7 + borderPadding*6, "speeder", 0, 50).setOrigin(0);
-        this.ship04.setScale(0.5);
-        // checking width
-        console.log(`ship 1 width is ${this.ship01.width}`);
-        console.log(`ship 4 width is ${this.ship04.width}`);
-        if(this.ship01.moveDir == "right"){
-            this.ship01.flipX = true;
+        this.ship01 = new Spaceship(this, game.config.width/2, borderUISize*4, "enemyBig", 0, 30).setOrigin(0.5);
+        this.ship02 = new Spaceship(this, game.config.width/2, borderUISize*5 + borderPadding*2, "enemyBig", 0, 20).setOrigin(0.5);
+        this.ship03 = new Spaceship(this, game.config.width/2, borderUISize*6 + borderPadding*4, "enemyBig", 0, 10).setOrigin(0.5);
+        this.ship04 = new Speeder(this, game.config.width/2, borderUISize*7 + borderPadding*6, "enemySmall", 0, 50).setOrigin(0.5);
+        this.ship01.angle = -90;
+        this.ship02.angle = -90;
+        this.ship03.angle = -90;
+        this.ship04.angle = -90;
+        // checking size
+        //console.log(`ship 1 width is ${this.ship01.width}`);
+        //console.log(`ship 1 height is ${this.ship01.height}`);
+        //console.log(`ship 4 width is ${this.ship04.width}`);
+        if(this.ship01.moveDir == "left"){
+            this.ship01.angle = 90;
         }
-        if(this.ship02.moveDir == "right"){
-            this.ship02.flipX = true;
+        if(this.ship02.moveDir == "left"){
+            this.ship02.angle = 90;
         }
-        if(this.ship03.moveDir == "right"){
-            this.ship03.flipX = true;
+        if(this.ship03.moveDir == "left"){
+            this.ship03.angle = 90;
         }
         if(this.ship04.moveDir == "left"){
-            this.ship04.flipX = true;
+            this.ship04.angle = 90;
         }
         
         // define keys
@@ -61,9 +65,22 @@ class Play extends Phaser.Scene {
         // animation config
         this.anims.create({
             key: "explode",
-            frames: this.anims.generateFrameNumbers("explosion", {start: 0, end: 9, first: 0}),
+            frames: this.anims.generateFrameNumbers("explosion", {start: 0, end: 4, first: 0}),
             frameRate: 30
         });
+        this.anims.create({
+            key: "moveEnemyBig",
+            frames: this.anims.generateFrameNumbers("enemyBig", {start: 0, end: 1, first: 0}),
+            repeat: -1,
+            frameRate: 30
+        })
+        this.ship01.anims.play("moveEnemyBig");
+        this.ship02.anims.play("moveEnemyBig");
+        this.ship03.anims.play("moveEnemyBig");
+
+        // checking size
+        console.log(`ship 1 width is ${this.ship01.width}`);
+        console.log(`ship 1 height is ${this.ship01.height}`);
 
         // initialize score
         this.p1Score = 0;
@@ -159,8 +176,8 @@ class Play extends Phaser.Scene {
 
     checkCollision(rocket, ship) {
         // simple AABB checking
-        if(rocket.x < ship.x + ship.width && rocket.x + rocket.width > ship.x &&
-           rocket.y < ship.y + ship.height && rocket.height + rocket.y > ship.y) {
+        if(rocket.x < ship.x + ship.width/2 && rocket.x + rocket.width > ship.x - ship.width/2 &&
+           rocket.y < ship.y + ship.height/2 && rocket.height + rocket.y > ship.y - ship.height/2) {
             return true;
         }else{
             return false;
@@ -171,7 +188,7 @@ class Play extends Phaser.Scene {
         // temporarily hide ship
         ship.alpha = 0;
         // create explosion sprite at ship's position
-        let boom = this.add.sprite(ship.x, ship.y, "explosion").setOrigin(0);
+        let boom = this.add.sprite(ship.x, ship.y, "explosion").setOrigin(0.5);
         boom.anims.play("explode");             // play explode animation
         boom.on("animationcomplete", () => {    // callback after anim completes
             ship.reset();                       // reset ship position

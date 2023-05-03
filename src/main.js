@@ -1,7 +1,7 @@
 /*
 Name: David Amaya
 Mod title: Rocket Patrol 2
-Time working on project: 5 hours, 50 mins
+Time working on project: 3 hours, 20 mins
 
 Mod List:
     High Score tracker: 5 points
@@ -13,11 +13,17 @@ Mod List:
         bgm by Pagtrick de Arteaga from https://patrickdearteaga.com/arcade-music/
     Added new background image: 5 points
         Using "space background generator" at https://deep-fold.itch.io/space-background-generator
+    Added new animated sprite for ships: 10 points
+        https://ansimuz.itch.io/spaceship-shooter-environment
+        upscaled to 200% using https://lospec.com/pixel-art-scaler/
+    Added new faster spaceship subclass: 15 points
 */
 
 let config = {
     type: Phaser.CANVAS,
+    //640
     width: 640,
+    //480
     height: 480,
     scene: [ Menu, Play ]
 }

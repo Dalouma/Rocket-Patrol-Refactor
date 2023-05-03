@@ -6,6 +6,7 @@ class Spaceship extends Phaser.GameObjects.Sprite {
         this.moveSpeed = game.settings.spaceshipSpeed;
         // randomize movement direction (left/right)
         this.moveDir = Phaser.Math.Between(0,1) == 0 ? "left" : "right";
+        // animation config
     }
 
     update() {
