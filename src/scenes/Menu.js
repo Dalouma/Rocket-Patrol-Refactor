@@ -65,7 +65,7 @@ class Menu extends Phaser.Scene {
         };
 
         // show menu text
-        this.add.text(game.config.width/2, game.config.height/2 - borderUISize*2 - borderPadding*2, "ROCKET PATROL", menuConfig).setOrigin(0.5);
+        this.add.text(game.config.width/2, game.config.height/2 - borderUISize*2 - borderPadding*2, "GALAXY PATROL", menuConfig).setOrigin(0.5);
         this.add.text(game.config.width/2, game.config.height/2, "Use <--> arrows to move & (F) to fire", menuConfig).setOrigin(0.5);
         //menuConfig.backgroundColor = "#00FF00";
         //menuConfig.color = "#000";
