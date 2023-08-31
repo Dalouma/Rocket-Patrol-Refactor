@@ -35,6 +35,9 @@ let config = {
     width: 640,
     //480
     height: 480,
+    scale: {
+        autoCenter: Phaser.Scale.CENTER_BOTH
+    },
     scene: [ Menu, Play ]
 }
 
